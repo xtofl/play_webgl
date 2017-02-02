@@ -1,0 +1,51 @@
+<html>
+<head>
+</head>
+<body>
+<h1>A View on the Machine</h1>
+<script src="node_modules/three.js/node_modules/three/three.js"></script>
+<script>
+var scene = new THREE.Scene();
+var w = window.innerWidth;
+var h = window.innerHeight;
+var camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);
+var renderer = new THREE.WebGLRenderer();
+
+
+var geometry = new THREE.BoxGeometry(1, 1, 1);
+var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+var cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+camera.position.x = 3;
+camera.position.y = 1;
+camera.position.z = 5;
+
+camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+
+renderer.setSize(w, h);
+document.body.appendChild(renderer.domElement);
+
+function addLine(from, to) {
+    var material = new THREE.LineBasicMaterial({color: 0x0000ff});
+    var vertices = [[-10, 0, 0], [0, 10, 0], [10, 0, 0]];
+    vertices.forEach(function(v){
+        geometry.vertices.push(new THREE.Vector3(v[0], v[1], v[2]));
+    });
+    var line = new THREE.Line(geometry, material);
+    scene.add(line);
+}
+addLine();
+
+function render(){
+    requestAnimationFrame(render);
+    renderer.render(scene, camera);
+}
+
+render();
+
+</script>
+</body>
+</html>
+
